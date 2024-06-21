@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infotainment App</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px;
+            flex: 1;
+            padding: 20px;
+        }
+        .app {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .app:hover {
+            background-color: #e0e0e0;
+        }
+        .app img {
+            width: 50px;
+            height: 50px;
+        }
+        .iframe-container {
+            display: none;
+            flex: 1;
+            padding: 20px;
+        }
+        iframe {
+            width: 100%;
+            height: calc(100% - 50px);
+            border: none;
+        }
+        .home-button {
+            display: none;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .home-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container" id="homeScreen">
+        <div class="app" data-url="https://www.example.com/news">
+            <img src="https://img.icons8.com/ios-filled/50/000000/news.png" alt="News">
+        </div>
+        <div class="app" data-url="https://www.example.com/weather">
+            <img src="https://img.icons8.com/ios-filled/50/000000/partly-cloudy-day.png" alt="Weather">
+        </div>
+        <div class="app" data-url="https://www.example.com/fun-fact">
+            <img src="https://img.icons8.com/ios-filled/50/000000/light-on.png" alt="Fun Fact">
+        </div>
+        <div class="app" data-url="https://www.example.com/games">
+            <img src="https://img.icons8.com/ios-filled/50/000000/controller.png" alt="Games">
+        </div>
+    </div>
+    <div class="iframe-container" id="iframeContainer">
+        <iframe id="iframe" src=""></iframe>
+    </div>
+    <div class="home-button" id="homeButton">Home</div>
+
+    <script>
+        const apps = document.querySelectorAll('.app');
+        const iframeContainer = document.getElementById('iframeContainer');
+        const iframe = document.getElementById('iframe');
+        const homeButton = document.getElementById('homeButton');
+        const homeScreen = document.getElementById('homeScreen');
+
+        apps.forEach(app => {
+            app.addEventListener('click', () => {
+                const url = app.getAttribute('data-url');
+                iframe.src = url;
+                iframeContainer.style.display = 'flex';
+                homeButton.style.display = 'block';
+                homeScreen.style.display = 'none';
+            });
+        });
+
+        homeButton.addEventListener('click', () => {
+            iframe.src = '';
+            iframeContainer.style.display = 'none';
+            homeButton.style.display = 'none';
+            homeScreen.style.display = 'grid';
+        });
+    </script>
+</body>
+</html>
